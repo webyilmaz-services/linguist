@@ -8,6 +8,7 @@ require 'optparse'
 require 'json'
 require 'tempfile'
 require 'zlib'
+require 'open3'
 
 class GitLinguist
   def initialize(path, commit_oid, incremental = true)
@@ -113,9 +114,11 @@ def git_linguist(args)
   end
 
   parser.parse!(args)
-  git_dir = `git rev-parse --git-dir`.strip
-  raise "git-linguist must be run in a Git repository" unless $?.success?
-  wrapper = GitLinguist.new(git_dir, commit, incremental)
+  git_dir, stderr, status = Open3.capture3("git rev-parse --git-dir")
+  exit 0 if stderr =~ /Unable to read current working directory: No such file or directory/
+
+  raise "git-linguist must be run in a Git repository" unless status.success?
+  wrapper = GitLinguist.new(git_dir.strip, commit, incremental)
 
   case args.pop
   when "stats"
