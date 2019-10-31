@@ -15,13 +15,6 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - name: Cache submodules
-      uses: actions/cache@preview
-      with:
-        path: vendor/grammars
-        key: submodules-${{ hashFiles('vendor/grammars/**/.git/HEAD') }}
-        restore-keys: |
-          submodules-
     - name: Install dependencies
       run: script/ci/install_deps
     - name: Run tests
