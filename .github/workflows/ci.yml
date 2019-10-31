@@ -15,15 +15,10 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - name: Cache submodules
-      uses: actions/cache@preview
-      with:
-        path: .git/modules
-        key: submodules-${{ hashFiles('**/.git/modules/vendor/**/HEAD') }}
-        restore-keys: |
-          submodules-
     - name: Install dependencies
-      run: script/ci/install_deps
+      run: |
+        ls -la
+        script/ci/install_deps
     - name: Run tests
       run: bundle exec rake
     - name: Check Licenses
