@@ -19,7 +19,7 @@ jobs:
       uses: actions/cache@preview
       with:
         path: .git/modules
-        key: submodules-${{ hashFiles('.git/modules/**') }}
+        key: submodules-${{ hashFiles('.git/modules/vendor/**/HEAD') }}
         restore-keys: |
           submodules-
     - name: Install dependencies
