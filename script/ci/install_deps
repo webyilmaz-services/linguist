@@ -12,10 +12,8 @@ git fetch origin master:master v2.0.0:v2.0.0 test/attributes:test/attributes tes
 # Replace SSH links to submodules by HTTPS links.
 sed -i 's|git@github.com:|https://github.com/|' .gitmodules
 
-# Fetch all grammars
-git submodule init
-git submodule sync --quiet
-script/fast-submodule-update
+# Fetch CodeMirror - we don't use the grammars during testing so no need to pull those
+git submodule update --init --remote -- vendor/CodeMirror
 
 # Install dependent gems
 bundle install --jobs 4 --retry 3 --without debug
