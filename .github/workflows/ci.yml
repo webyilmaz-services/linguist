@@ -22,6 +22,7 @@ jobs:
     - name: Test Dockerfile
       run: |
         docker build -t linguist .
-        docker run --rm -v $(pwd):$(pwd) -w $(pwd) -t linguist | grep foo
+        docker run --rm -v $(pwd):$(pwd) -w $(pwd) -t linguist > output
+        grep foo output || { cat output; exit 1 }
     - name: Check Licenses
       run: script/licensed status
