@@ -19,5 +19,9 @@ jobs:
       run: script/ci/install_deps
     - name: Run tests
       run: bundle exec rake
+    - name: Test Dockerfile
+      run: |
+        docker build -t linguist .
+        docker run --rm -v $(pwd):$(pwd) -w $(pwd) -t linguist github-linguist --breakdown
     - name: Check Licenses
       run: script/licensed status
