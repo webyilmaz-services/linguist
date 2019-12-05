@@ -20,9 +20,14 @@ jobs:
     - name: Run tests
       run: bundle exec rake
     - name: Test Dockerfile
-      run: |
-        docker build -t linguist .
-        docker run --rm -v $(pwd):$(pwd) -w $(pwd) -t linguist > output
-        grep foo output
+      steps:
+        - name: Build container
+          run: docker build -t linguist .
+        - name: Analyse current directory
+          run: docker run --rm -v $(pwd):$(pwd) -w $(pwd) -t linguist > output
+        - name: Confirm analysis
+          run: |
+            cat output
+            grep foo output
     - name: Check Licenses
       run: script/licensed status
