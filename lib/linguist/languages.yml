@@ -6601,3 +6601,14 @@ xBase:
   tm_scope: source.harbour
   ace_mode: text
   language_id: 421
+Yimx:
+  type: programming
+  color: "#F00640"
+  extensions:
+  - ".yim"
+  - ".yimx"
+  filenames:
+  - yim
+  tm_scope: source.yimx
+  ace_mode: text
+  language_id: 422
